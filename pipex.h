@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:51:41 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/04 14:57:50 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:42:41 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@
 # include <fcntl.h> //open
 # include <stdlib.h> //malloc free
 # include <sys/wait.h> //wait waitpid
+
+char	**ft_split(char const *s, char c);
 
 #endif

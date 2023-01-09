@@ -19,24 +19,28 @@ void	child_process(char **argv, char **env, int *fd)
 
 	inputfd = open(argv[1], O_RDONLY, 0777);
 	if (inputfd == -1)
-		return (1);
+	{
+		write(2, "grh", 3);
+		return ;
+	}
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(inputfd, STDIN_FILENO);
 	close(fd[0]);
-	exec(argv[2], env);
+	execve(argv[2], argv, env);
 }
 
-void	main_process(char **argv, char **env, int *fd)
+int	main_process(char **argv, char **env, int *fd)
 {
 	int		outputfd;
 
 	outputfd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (outputfd == -1)
-		error();
+		return (1);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outputfd, STDOUT_FILENO);
 	close(fd[1]);
-	exec(argv[3], env);
+	execve(argv[3], argv, env);
+	return (127);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -44,16 +48,18 @@ int	main(int argc, char **argv, char **env)
 	int		fd[2];
 	pid_t	pid;
 
+	if (argc != 5)
+		return (1);
 	if (pipe(fd) == -1)
 		return (1);
-  pid = fork();
+	pid = fork();
 	if (pid == -1)
-    return (2);
+		return (2);
 	if (!pid)
 		child_process(argv, env, fd);
 	else
 		main_process(argv, env, fd);
-	waitpid(pid, 0, 0);
+	waitpid(pid, NULL, 0);
 	close(fd[0]);
 	close(fd[1]);
 	return (0);
