@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/09 16:14:33 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/09 16:47:40 by avancoll         ###   ########.fr       */
+/*   Created: 2023/01/11 14:44:37 by avancoll          #+#    #+#             */
+/*   Updated: 2023/01/11 14:49:56 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,34 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	return (NULL);
 }
 
-int	exec(char **argv, char **env)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (!ft_strnstr(env[i], "PATH=", 5))
+	while (s[i])
 		i++;
+	return (i);
+}
 
-	execve(argv[2], argv, env);
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*res;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		res[i] = s1[i];
+	free(s1);
+	j = -1;
+	while (s2[++j])
+		res[i + j] = s2[j];
+	res[i + j] = '\0';
+	return (res);
 }
