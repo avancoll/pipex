@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:51:41 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/11 17:23:09 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:42:28 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include <fcntl.h> //open
 # include <stdlib.h> //malloc free
 # include <sys/wait.h> //wait waitpid
+
+enum {
+	ARGC_ERROR = 0,
+	PIPE_ERROR = 1,
+	FORK_ERROR = 2,
+	MALLOC_ERROR = 3,
+	INPUTFILE_ERROR = 4,
+};
 
 size_t	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);

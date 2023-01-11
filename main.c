@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-int	error_handler(char **path, char **cmd)
+int	free_path(char **path, char **cmd)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ int	exec(char *argv, char **env)
 	while (path[i] && access(path[i], F_OK))
 		i++;
 	execve(path[i], cmd, env);
-	return (error_handler(path, cmd));
+	return (free_path(path, cmd));
 }
 
 void	child_process(char **argv, char **env, int *fd)
@@ -58,7 +58,7 @@ void	child_process(char **argv, char **env, int *fd)
 	inputfd = open(argv[1], O_RDONLY, 0777);
 	if (inputfd == -1)
 	{
-		write(2, "grh", 3);
+		write(2, "Error: could not open the input file\n", 38);
 		return ;
 	}
 	dup2(fd[1], STDOUT_FILENO);
@@ -81,20 +81,18 @@ int	main_process(char **argv, char **env, int *fd)
 	return (127);
 }
 
-
-
 int	main(int argc, char **argv, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
 
 	if (argc != 5)
-		return (1);
+		return (error_handler(ARGC_ERROR));
 	if (pipe(fd) == -1)
-		return (1);
+		return (error_handler(PIPE_ERROR));
 	pid = fork();
 	if (pid == -1)
-		return (2);
+		return (error_handler(FORK_ERROR));
 	if (!pid)
 		child_process(argv, env, fd);
 	else

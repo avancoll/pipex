@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:44:37 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/11 17:22:51 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:49:45 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,18 @@ char	*ft_strjoin(char *s1, char *s2)
 		res[i + j] = s2[j];
 	res[i + j] = '\0';
 	return (res);
+}
+
+int	error_handler(int errnum)
+{
+	if (errnum == ARGC_ERROR)
+		write(2, "Error: Wrong number of arguments\n", 34);
+	else if (errnum == PIPE_ERROR)
+		write(2, "Error: Due to pipe\n", 20);
+	else if (errnum == FORK_ERROR)
+		write(2, "", );
+	else if (errnum == MALLOC_ERROR)
+		write(2, "", );
+	else if (errnum == INPUTFILE_ERROR)
+		write(2, "", );
 }
