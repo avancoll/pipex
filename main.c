@@ -12,6 +12,45 @@
 
 #include "pipex.h"
 
+int	error_handler(char **path, char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+		free(path[i++]);
+	free(path);
+	i = 0;
+	while (cmd[i])
+		free(cmd[i++]);
+	free(cmd);
+	return (1);
+}
+
+int	exec(char *argv, char **env)
+{
+	int		i;
+	char	**path;
+	char	**cmd;
+
+	i = 0;
+	while (!ft_strnstr(env[i], "PATH=", 5))
+		i++;
+	path = ft_split(env[i] + 5, ':');
+	cmd = ft_split(argv, ' ');
+	i = -1;
+	while (path[++i])
+	{
+		path[i] = ft_strjoin(path[i], "/");
+		path[i] = ft_strjoin(path[i], cmd[0]);
+	}
+	i = 0;
+	while (path[i] && access(path[i], F_OK))
+		i++;
+	execve(path[i], cmd, env);
+	return (error_handler(path, cmd));
+}
+
 void	child_process(char **argv, char **env, int *fd)
 {
 	int	inputfd;
@@ -42,29 +81,7 @@ int	main_process(char **argv, char **env, int *fd)
 	return (127);
 }
 
-int	exec(char *argv, char **env)
-{
-	int		i;
-	char	**path;
-	char	**cmd;
 
-	i = 0;
-	while (!ft_strnstr(env[i], "PATH=", 5))
-		i++;
-	path = ft_split(env[i] + 5, ':');
-	cmd = ft_split(argv, ' ');
-	i = -1;
-	while (path[++i])
-	{
-		path[i] = ft_strjoin(path[i], "/");
-		path[i] = ft_strjoin(path[i], cmd[0]);
-	}
-	i = 0;
-	while (access(path[i], 0))
-		i++;
-	execve(path[i], cmd, env);
-	return (1);
-}
 
 int	main(int argc, char **argv, char **env)
 {
