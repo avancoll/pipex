@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:36:47 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/12 15:11:07 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:48:38 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	**ft_free(char **res, int a)
 		a--;
 	}
 	free(res);
+	perror("malloc");
 	return (NULL);
 }
 
@@ -101,6 +102,9 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	res = malloc(sizeof(*res) * (word_count(s, c) + 1));
 	if (!res)
+	{
+		perror("malloc");
 		return (0);
+	}
 	return (ft_split2(s, c, res));
 }

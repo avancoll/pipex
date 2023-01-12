@@ -24,7 +24,7 @@ int	free_path(char **path, char **cmd)
 	while (cmd[i])
 		free(cmd[i++]);
 	free(cmd);
-	return (error_handler(CMD_ERROR));
+	return (1);
 }
 
 int	exec(char *argv, char **env)
@@ -48,6 +48,7 @@ int	exec(char *argv, char **env)
 	while (path[i] && access(path[i], F_OK))
 		i++;
 	execve(path[i], cmd, env);
+	perror(argv);
 	return (free_path(path, cmd));
 }
 
@@ -57,7 +58,7 @@ int	child_process(char **argv, char **env, int *fd)
 
 	inputfd = open(argv[1], O_RDONLY, 0777);
 	if (inputfd == -1)
-		return (error_handler(INPUTFILE_ERROR));
+		return (error_handler(INPUTFILE_ERROR, argv[1]));
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(inputfd, STDIN_FILENO);
 	close(fd[0]);
@@ -71,7 +72,7 @@ int	main_process(char **argv, char **env, int *fd)
 
 	outputfd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (outputfd == -1)
-		return (error_handler(OUTPUTFILE_ERROR));
+		return (error_handler(OUTPUTFILE_ERROR, argv[4]));
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outputfd, STDOUT_FILENO);
 	close(fd[1]);
@@ -85,12 +86,12 @@ int	main(int argc, char **argv, char **env)
 	pid_t	pid;
 
 	if (argc != 5)
-		return (error_handler(ARGC_ERROR));
+		return (error_handler(ARGC_ERROR, NULL));
 	if (pipe(fd) == -1)
-		return (error_handler(PIPE_ERROR));
+		return (error_handler(PIPE_ERROR, NULL));
 	pid = fork();
 	if (pid == -1)
-		return (error_handler(FORK_ERROR));
+		return (error_handler(FORK_ERROR, NULL));
 	if (!pid)
 		child_process(argv, env, fd);
 	else

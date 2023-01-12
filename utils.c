@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:44:37 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/12 15:34:06 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:50:03 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!res)
 	{
 		free(s1);
+		perror("malloc");
 		return (NULL);
 	}
 	i = -1;
@@ -75,19 +76,17 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-int	error_handler(int errnum)
+int	error_handler(int errnum, char *argv)
 {
 	if (errnum == ARGC_ERROR)
 		write(2, "Error: Wrong number of arguments\n", 34);
 	else if (errnum == PIPE_ERROR)
-		write(2, "Error: Pipe could not work properly\n", 37);
+		perror("pipe");
 	else if (errnum == FORK_ERROR)
-		write(2, "Error: Fork could not work properly\n", 37);
+		perror("fork");
 	else if (errnum == INPUTFILE_ERROR)
-		write(2, "Error: Open could not work properly with input file\n", 53);
+		perror(argv);
 	else if (errnum == OUTPUTFILE_ERROR)
-		write(2, "Error: Open could not work properly with output file\n", 54);
-	else if (errnum == CMD_ERROR)
-		write(2, "Error: Command not found\n", 26);
+		perror(argv);
 	return (1);
 }
