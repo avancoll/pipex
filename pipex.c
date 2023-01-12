@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-int	free_path(char **path, char **cmd)
+int	free_path(char **path, char **cmd, char *argv)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	free_path(char **path, char **cmd)
 	while (cmd[i])
 		free(cmd[i++]);
 	free(cmd);
-	return (1);
+	return (error_handler(CMD_ERROR, argv));
 }
 
 int	exec(char *argv, char **env)
@@ -48,8 +48,7 @@ int	exec(char *argv, char **env)
 	while (path[i] && access(path[i], F_OK))
 		i++;
 	execve(path[i], cmd, env);
-	perror(argv);
-	return (free_path(path, cmd));
+	return (free_path(path, cmd, argv));
 }
 
 int	child_process(char **argv, char **env, int *fd)

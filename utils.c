@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:44:37 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/12 16:50:03 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:18:10 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,10 @@ int	error_handler(int errnum, char *argv)
 		perror(argv);
 	else if (errnum == OUTPUTFILE_ERROR)
 		perror(argv);
+	else if (errnum == CMD_ERROR)
+	{
+		write(2, argv, ft_strlen(argv));
+		write(2, ": Command not found\n", 21);
+	}
 	return (1);
 }
