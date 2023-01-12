@@ -6,13 +6,13 @@
 #    By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:58:04 by avancoll          #+#    #+#              #
-#    Updated: 2023/01/12 15:11:10 by avancoll         ###   ########.fr        #
+#    Updated: 2023/01/12 15:35:31 by avancoll         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-SRCS =	main.c\
+SRCS =	pipex.c\
 		utils.c\
 		ft_split.c
 

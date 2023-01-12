@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:44:37 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/12 15:12:23 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:34:06 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,10 @@ int	error_handler(int errnum)
 		write(2, "Error: Pipe could not work properly\n", 37);
 	else if (errnum == FORK_ERROR)
 		write(2, "Error: Fork could not work properly\n", 37);
-	else if (errnum == MALLOC_ERROR)
-		write(2, "Error: Malloc could not work properly\n", 39);
 	else if (errnum == INPUTFILE_ERROR)
-		write(2, "Error: Open could not work properly with input file\n", 57);
+		write(2, "Error: Open could not work properly with input file\n", 53);
 	else if (errnum == OUTPUTFILE_ERROR)
-		write(2, "Error: Open could not work properly with output file\n", 58);
+		write(2, "Error: Open could not work properly with output file\n", 54);
 	else if (errnum == CMD_ERROR)
 		write(2, "Error: Command not found\n", 26);
 	return (1);
