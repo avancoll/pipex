@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:44:37 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/11 17:49:45 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:07:14 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,16 @@ int	error_handler(int errnum)
 	if (errnum == ARGC_ERROR)
 		write(2, "Error: Wrong number of arguments\n", 34);
 	else if (errnum == PIPE_ERROR)
-		write(2, "Error: Due to pipe\n", 20);
+		write(2, "Error: Pipe could not work properly\n", 37);
 	else if (errnum == FORK_ERROR)
-		write(2, "", );
+		write(2, "Error: Fork could not work properly\n", 37);
 	else if (errnum == MALLOC_ERROR)
-		write(2, "", );
+		write(2, "Error: Malloc could not work properly\n", 39);
 	else if (errnum == INPUTFILE_ERROR)
-		write(2, "", );
+		write(2, "Error: Open could not work properly with the input file\n", 57);
+	else if (errnum == OUTPUTFILE_ERROR)
+		write(2, "Error: Open could not work properly with the output file\n", 58);
+	else if (errnum == CMD_ERROR)
+		write(2, "Error: Command not found\n", 26);
+	return (1);
 }

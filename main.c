@@ -24,7 +24,7 @@ int	free_path(char **path, char **cmd)
 	while (cmd[i])
 		free(cmd[i++]);
 	free(cmd);
-	return (1);
+	return (error_handler(CMD_ERROR));
 }
 
 int	exec(char *argv, char **env)
@@ -51,20 +51,18 @@ int	exec(char *argv, char **env)
 	return (free_path(path, cmd));
 }
 
-void	child_process(char **argv, char **env, int *fd)
+int	child_process(char **argv, char **env, int *fd)
 {
 	int	inputfd;
 
 	inputfd = open(argv[1], O_RDONLY, 0777);
 	if (inputfd == -1)
-	{
-		write(2, "Error: could not open the input file\n", 38);
-		return ;
-	}
+		return (error_handler(INPUTFILE_ERROR));
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(inputfd, STDIN_FILENO);
 	close(fd[0]);
 	exec(argv[2], env);
+	return (1);
 }
 
 int	main_process(char **argv, char **env, int *fd)
@@ -73,12 +71,12 @@ int	main_process(char **argv, char **env, int *fd)
 
 	outputfd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (outputfd == -1)
-		return (1);
+		return (error_handler(OUTPUTFILE_ERROR));
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outputfd, STDOUT_FILENO);
 	close(fd[1]);
 	exec(argv[3], env);
-	return (127);
+	return (1);
 }
 
 int	main(int argc, char **argv, char **env)

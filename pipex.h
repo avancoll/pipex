@@ -6,7 +6,7 @@
 /*   By: avancoll <avancoll@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:51:41 by avancoll          #+#    #+#             */
-/*   Updated: 2023/01/11 17:42:28 by avancoll         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:07:36 by avancoll         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ enum {
 	FORK_ERROR = 2,
 	MALLOC_ERROR = 3,
 	INPUTFILE_ERROR = 4,
+	OUTPUTFILE_ERROR = 5,
+	CMD_ERROR = 6
 };
 
 size_t	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
+int		error_handler(int errnum);
 
 #endif
