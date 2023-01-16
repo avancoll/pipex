@@ -55,7 +55,7 @@ int	child_process(char **argv, char **env, int *fd)
 {
 	int	inputfd;
 
-	inputfd = open(argv[1], O_RDONLY, 0777);
+	inputfd = open(argv[1], O_RDONLY);
 	if (inputfd == -1)
 		return (error_handler(INPUTFILE_ERROR, argv[1]));
 	dup2(fd[1], STDOUT_FILENO);
@@ -69,7 +69,7 @@ int	main_process(char **argv, char **env, int *fd)
 {
 	int		outputfd;
 
-	outputfd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	outputfd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outputfd == -1)
 		return (error_handler(OUTPUTFILE_ERROR, argv[4]));
 	dup2(fd[0], STDIN_FILENO);
